@@ -1,0 +1,46 @@
+{
+	"name": "scrshot",
+	"version": "0.0.0",
+	"description": "Screenshot HTML.",
+	"main": "scrshot.js",
+	"option": {
+		"shell": "scrshot"
+	},
+	"bin": {
+		"scrshot": "run.js"
+	},
+	"scripts": {
+		"test": "mocha scrshot-test.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/volkovasystems/scrshot.git"
+	},
+	"keywords": [
+		"screenshot",
+		"html",
+		"scrshot"
+	],
+	"author": "Richeve S. Bebedor <richeve.bebedor@gmail.com>",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/volkovasystems/scrshot/issues"
+	},
+	"homepage": "https://github.com/volkovasystems/scrshot#readme",
+	"dependencies": {
+		"celene": "^0.0.0",
+		"comex": "^0.24.0",
+		"depher": "^0.36.0",
+		"detr": "^0.1.0",
+		"falzy": "^0.23.0",
+		"flur": "^0.0.0",
+		"harden": "^0.23.0",
+		"pyp": "^0.3.0",
+		"raze": "^0.33.0",
+		"shft": "^0.4.0",
+		"wdio-screenshot": "^0.6.0",
+		"webdriverio": "^4.8.0",
+		"yargs": "^8.0.2",
+		"zelf": "^0.13.0"
+	}
+}
