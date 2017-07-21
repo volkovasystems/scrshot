@@ -47,9 +47,11 @@
 
 	@include:
 		{
+			"booleanize": "booleanize",
 			"child": "child_process",
 			"comex": "comex",
 			"depher": "depher",
+			"fs": "fs",
 			"path": "path",
 			"pyp": "pyp",
 			"shft": "shft",
@@ -58,15 +60,18 @@
 	@end-include
 */
 
+const booleanize = require( "booleanize" );
+const celene = require( "celene" );
 const child = require( "child_process" );
 const comex = require( "comex" );
 const depher = require( "depher" );
+const fs = require( "fs" );
 const path = require( "path" );
 const pyp = require( "pyp" );
 const shft = require( "shft" );
 const zelf = require( "zelf" );
 
-const screenshotPath = pa	th.resolve( __dirname, "screenshot.js" );
+const screenshotPath = path.resolve( __dirname, "screenshot.js" );
 const screenshot = require( screenshotPath );
 
 const scrshot = function scrshot( html, synchronous, option ){
@@ -86,12 +91,40 @@ const scrshot = function scrshot( html, synchronous, option ){
 
 	option = pyp( parameter, OBJECT );
 
+	let mode = depher( option.mode, [ BUFFER, DATA_URI, FILE, STATUS ], STATUS );
+
 	if( synchronous ){
 		try{
-			return comex( "node" )
+			if( !celene( true ) ){
+				throw new Error( "cannot ensure selenium server" );
+			}
+
+			let output = comex( process.execPath )
 				.join( "--require", screenshotPath )
-				.join( "--eval", `'screenshot( "${ html }", true, ${ JSON.stringify( option ) } );'` )
-				.execute( true );
+				.join( "--eval", `'process.stdout.write( "" + screenshot( "${ html }", true, ${ JSON.stringify( option ) } ) );'` )
+				.execute( true, { "env": { "GLOBAL_SCREENSHOT": true } } );
+
+			if( /^false/.test( output ) ){
+				throw new Error( "screenshot failed" );
+			}
+
+			if( mode != STATUS && /^true/.test( output ) ){
+				output = output.replace( /^true/, "" );
+			}
+
+			switch( mode ){
+				case BUFFER:
+					return fs.readFileSync( output );
+
+				case DATA_URI:
+					return output;
+
+				case FILE:
+					return output;
+
+				default:
+					return booleanize( output.replace( /\s+/gm, "" ).replace( /(?:false|true)$/, "" ) );
+			}
 
 		}catch( error ){
 			throw new Error( `cannot take screenshot, ${ error.stack }` );

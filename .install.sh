@@ -1,4 +1,5 @@
 yarn add \
+booleanize \
 celene \
 comex \
 depher \

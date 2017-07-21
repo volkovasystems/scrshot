@@ -64,8 +64,7 @@ const DEFAULT_BROWSER_HEIGHT = 600;
 const DEFAULT_DIRECTORY = process.cwd( );
 const DEFAULT_OUTPUT = "screenshot";
 const DEFAULT_PAUSE = 1000;
-const DEFAULT_SILENT = true;
-const DEFAULT_PERSIST = true;
+const DEFAULT_MODE = FILE;
 
 const parameter = yargs
 	.epilogue( ( package.homepage )?
@@ -115,17 +114,17 @@ const parameter = yargs
 		"type": "number"
 	} )
 
-	.option( "s", {
-		"alias": "silent",
-		"default": DEFAULT_SILENT,
-		"describe": "Disable silent mode to output the data URI of the image.",
-		"type": "boolean"
+	.option( "m", {
+		"alias": "mode",
+		"default": DEFAULT_MODE,
+		"choices": [ DATA_URI, FILE, STATUS ],
+		"describe": "Set return mode.",
+		"type": "string"
 	} )
 
-	.option( "r", {
-		"alias": "persist",
-		"default": DEFAULT_PERSIST,
-		"describe": "Disable persist mode to prevent file output, this will force disable silent mode.",
+	.option( "s", {
+		"alias": "silent",
+		"describe": "Set silent mode.",
 		"type": "boolean"
 	} )
 
@@ -141,12 +140,15 @@ const parameter = yargs
 
 	.argv;
 
-process.stdout.write( scrshot( parameter.html, true, {
+let result = scrshot( parameter.html, true, {
 	"directory": parameter.directory,
 	"browserWidth": parameter.width,
 	"browserHeight": parameter.height,
 	"output": parameter.output,
 	"pause": parameter.pause,
-	"silent": parameter.silent,
-	"persist": parameter.persist
-} ) );
+	"mode": parameter.mode
+} );
+
+if( !parameter.silent ){
+	process.stdout.write( result );
+}

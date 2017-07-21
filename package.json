@@ -1,6 +1,6 @@
 {
 	"name": "scrshot",
-	"version": "0.0.0",
+	"version": "0.1.0",
 	"description": "Screenshot HTML.",
 	"main": "scrshot.js",
 	"option": {
@@ -28,15 +28,16 @@
 	},
 	"homepage": "https://github.com/volkovasystems/scrshot#readme",
 	"dependencies": {
+		"booleanize": "^0.1.0",
 		"celene": "^0.0.0",
 		"comex": "^0.24.0",
-		"depher": "^0.36.0",
+		"depher": "^0.37.0",
 		"detr": "^0.1.0",
 		"falzy": "^0.23.0",
 		"flur": "^0.0.0",
 		"harden": "^0.23.0",
-		"pyp": "^0.3.0",
-		"raze": "^0.33.0",
+		"pyp": "^0.4.0",
+		"raze": "^0.34.0",
 		"shft": "^0.4.0",
 		"wdio-screenshot": "^0.6.0",
 		"webdriverio": "^4.8.0",
